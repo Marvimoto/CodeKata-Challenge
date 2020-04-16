@@ -15,6 +15,10 @@ public class BloomFilter {
 
     }
 
+    /**
+     * Add input to BloomFilter
+     * @param input Input to add to BloomFilter
+     */
     public void add(String input) {
         // create hashes
         HashSet<Integer> hashes = this.hashInput(input);
@@ -26,6 +30,12 @@ public class BloomFilter {
 
     }
 
+    /**
+     * Determines whether or not the BloomFilter probably contains a string. It cannot be
+     * 100% certain due to possible collisions
+     * @param input Input to check
+     * @return boolean
+     */
     public boolean probablyContains(String input) {
         HashSet<Integer> hashes = this.hashInput(input);
         for (int hash : hashes) {
@@ -36,6 +46,11 @@ public class BloomFilter {
         return true;
     }
 
+    /**
+     * Hashes input
+     * @param input Input to hash
+     * @return a set of hashes
+     */
     private HashSet<Integer> hashInput(String input) {
         HashSet<Integer> hashes = new HashSet<>();
         hashes.add(createMd5HashChars(input));
@@ -43,6 +58,11 @@ public class BloomFilter {
         return hashes;
     }
 
+    /**
+     * Creates a MD5 hex hash
+     * @param input Input to hash
+     * @return Hash Hex String
+     */
     private String createMd5Hex(String input) {
         try {
             // Create messageDigest object
@@ -79,10 +99,17 @@ public class BloomFilter {
 
     }
 
+    /**
+     * Function creates a md5 hex hash and runs String hashCode function on the
+     * hash
+     *
+     * @param input Word to hash
+     * @return integer hash
+     */
     private int createMd5Hash(String input) {
         String hashHex = createMd5Hex(input);
 
-        // Fill a char array with chars from hex
+        // Run Math.abs on hashCode to prevent negative result
         int hash = Math.abs(hashHex.hashCode());
         return hash;
     }
